@@ -1,5 +1,5 @@
 <mat-tab-group mat-stretch-tabs>
-	<mat-tab label="Vota">
+	<mat-tab label="Vote">
 		<ng-template matTabContent>
 			<div class="mt-15">
 				<div class="mt-15" fxLayout="column">
@@ -13,7 +13,7 @@
 					</div>
 					<div class="display-fresh">
 						<button mat-stroked-button color="primary" (click)="delegateHandler()" class="pad full-width mt-15">
-							<i class="fa fa-address-card"></i> Delega tu decisión
+							<i class="fa fa-address-card"></i> DELEGATE
 						</button>
 					</div>
 				</div>
@@ -45,20 +45,19 @@
 
 				<mat-expansion-panel>
 					<mat-expansion-panel-header>
-						Lista de votos
+						Vote cast
 					</mat-expansion-panel-header>
 					<div>
 						<mat-list *ngFor="let vote of votes | async; let i = index">
-							<mat-list-item *ngIf="!vote.delegated"><span ngClass="mat-body-1">{{ vote.userId | voteName | async }} votó
+							<mat-list-item *ngIf="!vote.delegated"><span ngClass="mat-body-1">{{ vote.userId | voteEmail | async }} voted
 									<strong> {{ vote.value }} </strong></span></mat-list-item>
-							<mat-list-item *ngIf="vote.delegated"><span ngClass="mat-body-1">{{ vote.userId | voteName | async }} delegó su
-									voto
-									en {{
-									vote.representative | voteName | async }} </span></mat-list-item>
+							<mat-list-item *ngIf="vote.delegated"><span ngClass="mat-body-1">{{ vote.userId | voteEmail | async }} delegate
+									in {{
+									vote.representative | voteEmail | async }} </span></mat-list-item>
 							<mat-divider></mat-divider>
 						</mat-list>
 					</div>
-					</mat-expansion-panel>
+				</mat-expansion-panel>
 			</div>
 		</ng-template>
 	</mat-tab>

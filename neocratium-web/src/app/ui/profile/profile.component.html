@@ -4,58 +4,76 @@
 <ng-template #guest>
 	<div class="align-center mt-15">
 
-		<span ngClass="mat-title">Bienvenido a Neocratium</span>
+		<span ngClass="mat-title">Welcome to Neocratium</span>
 		<br>
-		<span ngClass="mat-body-1">Una herramienta para que los ciudadanos decidan que leyes, proyectos y acciones los
-			gobiernos deben trabajar usando la democracia liquida.
+		<span ngClass="mat-body-1">This is a private pilote for a group taking representative decision making.
 			<br>
 			<br>
-			Una democracia participativa donde cada ciudadano puede votar cada que haya una decisión que tomar, y puede delegar
-			su voto en un/una congresista diferente para cada decisión. El voto de cada congresista tendrá el peso del número de
-			ciudadanos que hayan delegado en él esa decisión.</span>
+			Everyone can create a decision, vote or delegate thee vote on each decision. All users are representative</span>
 		<br>
 		<br>
-		<span ngClass="mat-subheading-2">Ingresa a tu cuenta para empezar</span><br>
+		<span ngClass="mat-subheading-2">Log in with your email address</span><br>
 
-		<div class="display-fresh">
-			<button mat-raised-button color="accent" (click)="auth.googleLogin()" class="pad full-width">
-				<i class="fa fa-google"></i> Conectar con Google
+		<div fxLayout="column">
+			<mat-form-field>
+				<input matInput email="true" [(ngModel)]="email" placeholder="Email" required type="email" [errorStateMatcher]="matcher">
+				<mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+					Please enter a valid email address.
+				</mat-error>
+				<mat-error *ngIf="emailFormControl.hasError('required')">
+					<strong>Mandatory</strong>
+				</mat-error>
+			</mat-form-field>
+			<button mat-raised-button color="primary" [disabled]="emailSent" (click)="sendEmailLink(email)">
+				GENERAR LINK DE ACCESO
 			</button>
+			<div *ngIf="emailSent" class="pad">
+				Check your email to access Neocratium Private01
+			</div>
+			<div *ngIf="errorMessage">
+				{{ errorMessage }}
+			</div>
 		</div>
-		<div class="display-fresh">
+
+		<!-- <div class="display-fresh">
+			<button mat-raised-button color="accent" (click)="auth.googleLogin()" class="pad full-width">
+				<i class="fa fa-google"></i> Google
+			</button>
+		</div> -->
+		<!-- <div class="display-fresh">
 			<button mat-raised-button color="accent" (click)="auth.facebookLogin()" class="pad full-width">
 				<i class="fa fa-facebook"></i> Conectar con Facebook
 			</button>
-		</div>
-		<div class="display-fresh">
+		</div> -->
+		<!-- <div class="display-fresh">
 			<button mat-raised-button color="accent" (click)="auth.twitterLogin()" class="pad full-width">
-				<i class="fa fa-twitter"></i> Conectar con Twitter
+				<i class="fa fa-twitter"></i> Twitter
 			</button>
-		</div>
+		</div> -->
 		<a href="neocratia.org" target="_blank" ngClass="mat-subheading-2">
-			Únete al activisimo político digital en Neocratia</a>
+			Meet the Neocratia team.</a>
 	</div>
 </ng-template>
 
 <ng-template #authenticated>
 	<div class="align-center mt-15">
 		<div *ngIf="auth.user | async as user" class="align-center">
-			<img [src]="user.photoURL" class="avatar"><br>
-			<span ngClass="mat-title">Bienvenido {{user.displayName}},</span><br>
-			<span ngClass="mat-subheading-2">Estos son los datos de tu cuenta:</span><br><br>
+			<!-- <img [src]="user.photoURL" class="avatar"><br> -->
+			<span ngClass="mat-title">Welcome</span><br>
+			<span ngClass="mat-subheading-2">Account info:</span><br><br>
 			<span ngClass="mat-body-1"><strong>Email:</strong> {{user.email}}</span><br>
 			<span ngClass="mat-body-1"><strong>ID:</strong> {{user.uid}}</span>
 		</div>
 
 		<div class="display-fresh">
-			<button mat-raised-button color="primary" routerLink="/decisions" class="pad full-width">¡Ve a tomar decisiones!</button>
+			<button mat-raised-button color="primary" routerLink="/decisions" class="pad full-width">GO TO DECISIONS</button>
 		</div>
 		<div class="display-fresh">
-			<button mat-raised-button color="primary" (click)="contact()" class="pad full-width">Contáctanos para crear decisiones</button>
+			<button mat-raised-button color="primary" routerLink="/create" class="pad full-width">CREATE A DECISION</button>
 		</div>
 		<div class="
 		 display-fresh">
-			<button mat-raised-button color="accent" (click)="auth.signOut()" class="pad full-width">Cerrar sesión</button>
+			<button mat-raised-button color="accent" (click)="auth.signOut()" class="pad full-width">LOGOUT</button>
 		</div>
 	</div>
 </ng-template>

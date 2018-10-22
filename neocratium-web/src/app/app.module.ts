@@ -53,6 +53,7 @@ import { AuthService } from './core/services/auth.service';
 import { NavmenuComponent } from './core/components/navmenu/navmenu.component';
 import { ForumComponent } from './shared/components/forum/forum.component';
 import { VoteNamePipe } from './core/pipes/vote-name.pipe';
+import { VoteEmailPipe } from './core/pipes/vote-email.pipe';
 
 @NgModule({
 	declarations: [
@@ -66,7 +67,8 @@ import { VoteNamePipe } from './core/pipes/vote-name.pipe';
 		DelegateDialogComponent,
 		NavmenuComponent,
 		ForumComponent,
-		VoteNamePipe
+		VoteNamePipe,
+		VoteEmailPipe
 	],
 	imports: [
 		// Angular //

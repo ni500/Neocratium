@@ -35,7 +35,7 @@ export class DecisionsService {
 	addDecision(decision: Decision) {
 		const id = decision.decisionId;
 		this.decisionsCollection.doc(id).set(decision);
-		this.snackBar.open('Decisión Agregada', 'OK', {
+		this.snackBar.open('Decision created succesfully', 'OK', {
 			duration: 2000
 		});
 	}

@@ -15,10 +15,12 @@ export class VoteDecisionComponent implements OnInit {
 	@Input()
 	decisionId;
 
+	pageId = `/decisions/${this.decisionId}/`;
+
 	votes: Observable<any>;
 
 	public userVote = '';
-	public votesOptions = ['si', 'no', 'blanco'];
+	public votesOptions = ['yes', 'no', 'blank'];
 
 	constructor(public voteService: VoteService, private dialog: MatDialog, private snackBar: MatSnackBar) {}
 

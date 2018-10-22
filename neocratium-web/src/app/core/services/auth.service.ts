@@ -10,7 +10,6 @@ import { of } from 'rxjs';
 import 'rxjs/add/operator/switchMap';
 import { User } from '../models/user.model';
 
-
 @Injectable({
 	providedIn: 'root'
 })
@@ -18,6 +17,7 @@ export class AuthService {
 	usersCollection: AngularFirestoreCollection<User>;
 	users: Observable<User[]>;
 	public user: Observable<User>;
+	errorMessage: string;
 
 	constructor(private afAuth: AngularFireAuth, private afs: AngularFirestore, private router: Router) {
 		this.user = this.afAuth.authState.switchMap(user => {
@@ -27,6 +27,36 @@ export class AuthService {
 				return of(null);
 			}
 		});
+	}
+
+	async confirmSignIn(url) {
+		try {
+			if (this.afAuth.auth.isSignInWithEmailLink(url)) {
+				let email = window.localStorage.getItem('emailForSignIn');
+				if (!email) {
+					email = window.prompt(`Porfavor escribe el correo electrónico con el que quieres iniciar sesión en Vaki`);
+				}
+				const result = await this.afAuth.auth.signInWithEmailLink(email, url).then(credential => {
+					this.updateUserData(credential.user);
+				});
+				window.localStorage.removeItem('emailForSignIn');
+				this.router.navigate(['/']);
+			}
+		} catch (err) {
+			this.errorMessage = err.message;
+		}
+	}
+
+	async sendEmailLink(email) {
+		const actionCodeSettings = {
+			url: 'https://neocratium-private01.firebaseapp.com/',
+			handleCodeInApp: true
+		};
+		try {
+			await this.afAuth.auth.sendSignInLinkToEmail(email, actionCodeSettings);
+		} catch (err) {
+			this.errorMessage = err.message;
+		}
 	}
 
 	googleLogin() {
